@@ -1,5 +1,6 @@
 package com.uptc.frw.casoestudioredis.jpa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -9,19 +10,24 @@ import java.util.List;
 public class TypeElectronicDevice {
     @Id
     @Column(name = "ID_TIPO")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "typeDevicegen")
+    @SequenceGenerator(name="typeDevicegen",sequenceName = "TIPOELECTRO_SEQ",allocationSize=1)
     private long idTypeElectronicDevice;
     @Column(name = "NOMBRE")
     private String nameElectronicDevice;
     @Column(name = "CARACTERISTICAS")
     private String characteristicsElectronicDevice;
-    @Column(name = "TIPO_PADRE", insertable = false, updatable = false)
+    @Column(name = "TIPO_PADRE",insertable = false, updatable = false)
     private long typeElectronicDevice;
     @OneToMany(mappedBy = "typeElectronicDevice")
+    @JsonIgnore
     private List<ElectronicDevice> electronicDevicesList;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name= "TIPO_PADRE")
     private TypeElectronicDevice parentTypeElectronicDevice;
     @OneToMany(mappedBy = "parentTypeElectronicDevice")
+    @JsonIgnore
     private List<TypeElectronicDevice> typeElectronicDevicesList;
     public TypeElectronicDevice() {}
 
