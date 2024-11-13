@@ -1,7 +1,7 @@
 package com.uptc.frw.casoestudioredis.jpa.model;
 
 import jakarta.persistence.*;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +26,7 @@ public class Repair {
     private ElectronicDevice electronicDeviceRepair;
     @ManyToOne
     @JoinColumn(name="ID_CLIENTE")
+    @JsonIgnore
     private Client clientRepair;
     @OneToMany(mappedBy = "repairComponet")
     private List<ComponentRepair> componentsRepair;

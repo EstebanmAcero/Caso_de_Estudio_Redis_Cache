@@ -1,6 +1,7 @@
 package com.uptc.frw.casoestudioredis.jpa.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class ElectronicDevice {
     private List<Repair> repairElectronicDevices;
     @ManyToOne
     @JoinColumn(name = "ID_TIPO")
+    @JsonIgnore
     private TypeElectronicDevice typeElectronicDevice;
     public ElectronicDevice() {
     }
