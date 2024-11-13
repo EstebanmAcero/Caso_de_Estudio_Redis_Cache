@@ -17,14 +17,14 @@ public class TypeElectronicDevice {
     private String nameElectronicDevice;
     @Column(name = "CARACTERISTICAS")
     private String characteristicsElectronicDevice;
-    @Column(name = "TIPO_PADRE",insertable = false, updatable = false)
+    @Column(name = "TIPO_PADRE")
     private long typeElectronicDevice;
     @OneToMany(mappedBy = "typeElectronicDevice")
     @JsonIgnore
     private List<ElectronicDevice> electronicDevicesList;
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name= "TIPO_PADRE")
+    @JoinColumn(name= "TIPO_PADRE",insertable = false, updatable = false)
     private TypeElectronicDevice parentTypeElectronicDevice;
     @OneToMany(mappedBy = "parentTypeElectronicDevice")
     @JsonIgnore
