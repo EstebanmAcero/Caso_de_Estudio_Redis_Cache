@@ -1,5 +1,6 @@
 package com.uptc.frw.casoestudioredis.jpa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -9,6 +10,8 @@ import java.util.List;
 public class Component {
     @Id
     @Column(name = "ID_COMPONENTE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "componentGen")
+    @SequenceGenerator(name="componentGen",sequenceName = "COMPONENTE_SEQ",allocationSize=1)
     private long idComponent;
     @Column(name = "NOMBRE")
     private String nameComponent;
@@ -17,11 +20,14 @@ public class Component {
     @Column(name = "ID_FABRICANTE", insertable = false, updatable = false)
     private long idManufacturer;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "ID_FABRICANTE")
     private Manufacturer manufacturer;
     @OneToMany(mappedBy = "component")
+    @JsonIgnore
     private List<DeviceDetail> deviceDetailsComponet;
     @OneToMany(mappedBy = "component")
+    @JsonIgnore
     private List<ComponentRepair> componentRepairList;
     public Component() {
     }
