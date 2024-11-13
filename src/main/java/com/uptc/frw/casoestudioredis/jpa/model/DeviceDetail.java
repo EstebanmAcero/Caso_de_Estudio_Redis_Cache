@@ -1,12 +1,15 @@
 package com.uptc.frw.casoestudioredis.jpa.model;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name= "APARATODETALLE")
 public class DeviceDetail {
     @Id
     @Column(name= "ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "devDetailGen")
+    @SequenceGenerator(name="devDetailGen",sequenceName = "APARATODET_SEQ",allocationSize=1)
     private long idDeviceDetail;
     @Column(name= "ID_APARATO", insertable = false, updatable = false)
     private long idElectronicDevice;
@@ -20,7 +23,9 @@ public class DeviceDetail {
     @JoinColumn(name= "ID_COMPONENTE")
     private Component component;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name= "ID_APARATO")
+
     private ElectronicDevice electronicDevice;
     public DeviceDetail() {
     }
