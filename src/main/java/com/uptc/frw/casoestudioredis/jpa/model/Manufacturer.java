@@ -9,6 +9,8 @@ import java.util.List;
 public class Manufacturer {
     @Id
     @Column(name="ID_FABRICANTE")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator = "fabricanteGen")
+    @SequenceGenerator(name = "fabricanteGen",sequenceName = "FABRICANTE_SEQ", allocationSize = 1)
     private long idManufacturer;
     @Column(name="NOMBRE")
     private String nameManufacturer;

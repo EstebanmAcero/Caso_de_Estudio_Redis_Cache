@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 public class DeviceDetail {
     @Id
     @Column(name= "ID")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "aparatoDetGen")
+    @SequenceGenerator(name = "aparatoDetGen",sequenceName = "APARATODET_SEQ",allocationSize=1)
     private long idDeviceDetail;
     @Column(name= "ID_APARATO", insertable = false, updatable = false)
     private long idElectronicDevice;

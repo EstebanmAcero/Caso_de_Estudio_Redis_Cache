@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 public class ComponentRepair {
     @Id
     @Column(name = "ID_REPARACION", insertable = false, updatable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "reparacionComGen")
+    @SequenceGenerator(name = "reparacionComGen",sequenceName = "REPARACIONCOMP_SEQ", allocationSize = 1)
     private long idRepair;
     @Column(name = "ID_COMPONENTE",insertable = false, updatable = false)
     private long idComponent;
