@@ -10,6 +10,8 @@ import java.util.List;
 public class ElectronicDevice {
     @Id
     @Column(name = "ID_APARATO")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "aparatoGen")
+    @SequenceGenerator(name ="aparatoGen",sequenceName = "APARATO_SEQ",allocationSize = 1)
     private long idElectronicDevice;
     @Column(name = "DESCRIPCION")
     private String descriptionElectronicDevice;

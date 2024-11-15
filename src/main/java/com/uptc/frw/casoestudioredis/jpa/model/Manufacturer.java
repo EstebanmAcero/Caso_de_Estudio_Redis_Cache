@@ -1,14 +1,18 @@
 package com.uptc.frw.casoestudioredis.jpa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name="FABRICANTE")
-public class Manufacturer {
+public class Manufacturer implements Serializable {
     @Id
     @Column(name="ID_FABRICANTE")
+    @GeneratedValue(strategy=GenerationType.SEQUENCE,generator = "fabricanteGen")
+    @SequenceGenerator(name = "fabricanteGen",sequenceName = "FABRICANTE_SEQ", allocationSize = 1)
     private long idManufacturer;
     @Column(name="NOMBRE")
     private String nameManufacturer;
@@ -20,7 +24,8 @@ public class Manufacturer {
     private String rifManufacturer;
     @Column(name="DOMICILIOFISCAL")
     private String fiscalDomicileManufacturer;
-    @OneToMany(mappedBy = "manufacturer")
+    @OneToMany(mappedBy = "manufacturer",fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Component> components;
     public Manufacturer() {
     }

@@ -10,6 +10,8 @@ import java.util.List;
 public class Repair {
     @Id
     @Column(name = "ID_REPARACION")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reparacionGen")
+    @SequenceGenerator(name = "reparacionGen",sequenceName = "REPARACION_SEQ", allocationSize = 1)
     private long idRepair;
     @Column(name = "FECHA_ENTRADA")
     private Date dateInRepair;
@@ -28,7 +30,7 @@ public class Repair {
     @JoinColumn(name="ID_CLIENTE")
     @JsonIgnore
     private Client clientRepair;
-    @OneToMany(mappedBy = "repairComponet")
+    @OneToMany(mappedBy = "repairComponentKey")
     private List<ComponentRepair> componentsRepair;
     public Repair() {
     }

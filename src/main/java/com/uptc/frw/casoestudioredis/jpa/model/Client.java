@@ -1,14 +1,18 @@
 package com.uptc.frw.casoestudioredis.jpa.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name  = "CLIENTE")
-public class Client {
+public class Client implements Serializable {
     @Id
     @Column(name = "ID_CLIENTE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "clientGen")
+    @SequenceGenerator(name = "clientGen",sequenceName = "CLIENTE_SEQ",allocationSize = 1)
     private long idClient;
     @Column(name = "NOMBRE")
     private String nameClient;
@@ -20,7 +24,8 @@ public class Client {
     private String phoneClient;
     @Column(name = "EMAIL")
     private String emailClient;
-    @OneToMany(mappedBy = "clientRepair")
+    @OneToMany(mappedBy = "clientRepair", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Repair> repairClient;
     public Client() {}
 

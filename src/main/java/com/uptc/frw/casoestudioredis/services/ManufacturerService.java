@@ -15,9 +15,11 @@ public class ManufacturerService {
         return manufacturerRepository.findAll();
     }
     public Manufacturer findManufacturerById(Long id){
+        System.out.println("Encontrando fabricante de la DB con ID : " + id);
         return manufacturerRepository.findById(id).orElse(null);
     }
     public Manufacturer saveManufacturer(Manufacturer manufacturer){
+        System.out.println("Guardando fabricante" +manufacturer.getNameManufacturer());
         return manufacturerRepository.save(manufacturer);
     }
     public Manufacturer updateManufactuer(Manufacturer manufacturer){
@@ -27,9 +29,11 @@ public class ManufacturerService {
         manufacturerUpdate.setPhoneManufacturer(manufacturer.getPhoneManufacturer());
         manufacturerUpdate.setRifManufacturer(manufacturer.getRifManufacturer());
         manufacturerUpdate.setFiscalDomicileManufacturer(manufacturer.getFiscalDomicileManufacturer());
+        System.out.println("Actualizando fabricante" +manufacturerUpdate.getNameManufacturer());
         return manufacturerRepository.save(manufacturerUpdate);
     }
     public void deleteManufacturer(long idManufacturer){
+        System.out.println("Se ha eliminado el fabricante con ID " + idManufacturer);
         manufacturerRepository.deleteById(idManufacturer);
     }
 }

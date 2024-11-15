@@ -1,23 +1,28 @@
 package com.uptc.frw.casoestudioredis.jpa.model;
 
+import com.uptc.frw.casoestudioredis.jpa.model.key.ComponentRepairKey;
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "REPARACIONCOMPONENTE")
+@IdClass(ComponentRepairKey.class)
 public class ComponentRepair {
     @Id
+    @ManyToOne
+    @JoinColumn(name = "ID_COMPONENTE")
+    private Component componentRepairKey;
+    @Id
+    @ManyToOne
+    @JoinColumn(name = "ID_REPARACION")
+    private Repair repairComponentKey;
+
     @Column(name = "ID_REPARACION", insertable = false, updatable = false)
     private long idRepair;
     @Column(name = "ID_COMPONENTE",insertable = false, updatable = false)
     private long idComponent;
     @Column(name = "CANTIDAD")
     private long quantityComponentRepair;
-    @ManyToOne
-    @JoinColumn(name= "ID_REPARACION")
-    private Repair repairComponet;
-    @ManyToOne
-    @JoinColumn(name = "ID_COMPONENTE")
-    private Component component;
+
     public ComponentRepair() {
     }
 
@@ -45,20 +50,20 @@ public class ComponentRepair {
         this.quantityComponentRepair = quantityComponentRepair;
     }
 
-    public Repair getRepairComponet() {
-        return repairComponet;
+    public Component getComponentRepairKey() {
+        return componentRepairKey;
     }
 
-    public void setRepairComponet(Repair repairComponet) {
-        this.repairComponet = repairComponet;
+    public void setComponentRepairKey(Component componentRepairKey) {
+        this.componentRepairKey = componentRepairKey;
     }
 
-    public Component getComponent() {
-        return component;
+    public Repair getRepairComponentKey() {
+        return repairComponentKey;
     }
 
-    public void setComponent(Component component) {
-        this.component = component;
+    public void setRepairComponentKey(Repair repairComponentKey) {
+        this.repairComponentKey = repairComponentKey;
     }
 
     @Override
