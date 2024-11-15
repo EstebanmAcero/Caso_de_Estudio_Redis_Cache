@@ -22,13 +22,15 @@ RedisApp es un caso de estudio diseñado para evaluar la efectividad de **Redis*
 | 💻 **Java**         | Desarrollo backend                      |
 | 🌱 **Spring Boot**  | Framework para la construcción del proyecto |
 | 🏎️ **Redis**        | Sistema de caché y base de datos en memoria |
-| 🗄️ **MySQL**        | Base de datos relacional                |
+| 🗄️ **Oracle**        | Base de datos relacional                |
 
 ---
 
 ## 🔧 **Autores**
-:technologist: Luis Molina
+:technologist: Luis Molina 
+
 :technologist: Oscar Camacho
+
 :woman_technologist: Jenifer Gómez
 
   
