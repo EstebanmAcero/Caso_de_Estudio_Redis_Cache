@@ -19,8 +19,17 @@ public class ClientController {
     public ClientService clientService;
 
     @GetMapping
+    @Cacheable(
+            value = "clients",
+            key = "'allClients'",
+            unless = "#result == null"
+    )
     public List<Client> getAllClients() {
-        return clientService.findAllClient();
+        long start = System.currentTimeMillis();
+        List<Client> clients = clientService.findAllClient();
+        long end = System.currentTimeMillis();
+        System.out.println("Tiempo de respuesta sin cache para consultar múltiples clientes: " + (end - start) + " ms");
+        return clients;
     }
 
     @GetMapping("{id}")
@@ -33,7 +42,7 @@ public class ClientController {
         long start = System.currentTimeMillis();
         Client client = clientService.findByIdClient(id);
         long end = System.currentTimeMillis();
-        System.out.println("Tiempo de respuesta: " + (end - start) + " ms");
+        System.out.println("Tiempo de respuesta sin cache: " + (end - start) + " ms");
         return client;
     }
 
@@ -41,7 +50,7 @@ public class ClientController {
     @CachePut(
             value = "clients",
             key = "#client.idClient",
-            unless = "#result == null" // No almacenar en caché si el resultado es 'null'.
+            unless = "#result == null"
     )
     public Client addClient(@RequestBody Client client) {
         long start = System.currentTimeMillis();
@@ -49,6 +58,15 @@ public class ClientController {
         long end = System.currentTimeMillis();
         System.out.println("Tiempo de respuesta para agregar cliente: " + (end - start) + " ms");
         return savedClient;
+    }
+
+    @PostMapping("/generate")
+    public List<Client> addMultipleClients(@RequestBody List<Client> clients) {
+        long start = System.currentTimeMillis();
+        List<Client> savedClients = clientService.saveAllClients(clients);
+        long end = System.currentTimeMillis();
+        System.out.println("Tiempo de respuesta para agregar múltiples clientes: " + (end - start) + " ms");
+        return savedClients;
     }
 
     @PutMapping
