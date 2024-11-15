@@ -20,10 +20,12 @@ public class ComponentService {
         return componentRepository.findAll();
     }
     public Component findByIdComponent(Long id){
+        System.out.println("Encontrando componente de la DB con ID : " + id);
         return componentRepository.findById(id).orElse(null);
     }
     public Component saveComponent(Component component){
         Manufacturer manufacturer = manufacturerService.findManufacturerById(component.getIdManufacturer());
+        System.out.println("Guardando Componente" +component.getNameComponent());
         component.setManufacturer(manufacturer);
         return componentRepository.save(component);
     }
@@ -33,10 +35,11 @@ public class ComponentService {
         component1.setDescriptionComponent(component.getDescriptionComponent());
         component1.setDescriptionComponent(component.getDescriptionComponent());
         component1.setManufacturer(component.getManufacturer());
-
+        System.out.println("Actualizando componente" +component1.getNameComponent());
         return componentRepository.save(component1);
     }
     public void deleteComponent(long id){
+        System.out.println("Se ha eliminado el componente con ID " + id);
         componentRepository.deleteById(id);
     }
 }

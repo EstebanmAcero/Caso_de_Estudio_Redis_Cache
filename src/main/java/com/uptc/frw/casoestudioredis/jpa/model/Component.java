@@ -3,11 +3,12 @@ package com.uptc.frw.casoestudioredis.jpa.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name= "COMPONENTE")
-public class Component {
+public class Component implements Serializable {
     @Id
     @Column(name = "ID_COMPONENTE")
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "componentGen")
@@ -23,10 +24,10 @@ public class Component {
     @JsonIgnore
     @JoinColumn(name = "ID_FABRICANTE")
     private Manufacturer manufacturer;
-    @OneToMany(mappedBy = "component")
+    @OneToMany(mappedBy = "component", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<DeviceDetail> deviceDetailsComponet;
-    @OneToMany(mappedBy = "component")
+    @OneToMany(mappedBy = "componentRepairKey", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<ComponentRepair> componentRepairList;
     public Component() {

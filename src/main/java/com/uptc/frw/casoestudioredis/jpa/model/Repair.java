@@ -30,7 +30,7 @@ public class Repair {
     @JoinColumn(name="ID_CLIENTE")
     @JsonIgnore
     private Client clientRepair;
-    @OneToMany(mappedBy = "repairComponet")
+    @OneToMany(mappedBy = "repairComponentKey")
     private List<ComponentRepair> componentsRepair;
     public Repair() {
     }
