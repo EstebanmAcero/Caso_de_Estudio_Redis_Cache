@@ -15,19 +15,27 @@ import java.util.List;
 @RestController
 @RequestMapping("client")
 public class ClientController {
+
+    /**
+     * Controlador para la gestión de clientes utilizando Redis como sistema de caché
+     * Permite realizar operaciones de CRUD sobre clientes
+     */
+
     @Autowired
     public ClientService clientService;
 
     @GetMapping
     @Cacheable(
-            value = "clients",
-            key = "'allClients'",
-            unless = "#result == null"
+            value = "clients", // Nombre de la caché donde se almacenarán los resultados
+            key = "'allClients'", // Clave para identificar el valor en la caché, en este caso una lista de todos los clientes
+            unless = "#result == null" // No almacenar en caché si el resultado es nulo
     )
+
+    // Obtiene todos los clientes desde la base de datos
     public List<Client> getAllClients() {
         long start = System.currentTimeMillis();
         List<Client> clients = clientService.findAllClient();
-        long end = System.currentTimeMillis();
+        long end = System.currentTimeMillis();  // Fin de la medición de tiempo de respuesta
         System.out.println("Tiempo de respuesta sin cache para consultar múltiples clientes: " + (end - start) + " ms");
         return clients;
     }
@@ -39,18 +47,19 @@ public class ClientController {
             unless = "#result == null" // No almacenar en caché si el resultado es 'null'.
     )
     public Client getClientById(@PathVariable long id) {
-        long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis(); // Inicio de medición de tiempo de respuesta
+        // Busca un cliente específico en la base de datos utilizando el ID
         Client client = clientService.findByIdClient(id);
-        long end = System.currentTimeMillis();
+        long end = System.currentTimeMillis(); // Fin de la medición de tiempo de respuesta
         System.out.println("Tiempo de respuesta sin cache: " + (end - start) + " ms");
         return client;
     }
 
     @PostMapping
     @CachePut(
-            value = "clients",
-            key = "#client.idClient",
-            unless = "#result == null"
+            value = "clients", // Nombre de la caché donde se almacenará el cliente agregado
+            key = "#client.idClient", // Clave en la caché, basada en el ID del cliente recién agregado.
+            unless = "#result == null" // No almacenar en caché si el resultado es nulo
     )
     public Client addClient(@RequestBody Client client) {
         long start = System.currentTimeMillis();
@@ -63,6 +72,7 @@ public class ClientController {
     @PostMapping("/generate")
     public List<Client> addMultipleClients(@RequestBody List<Client> clients) {
         long start = System.currentTimeMillis();
+        // Guarda múltiples clientes en la base de datos
         List<Client> savedClients = clientService.saveAllClients(clients);
         long end = System.currentTimeMillis();
         System.out.println("Tiempo de respuesta para agregar múltiples clientes: " + (end - start) + " ms");
@@ -71,8 +81,8 @@ public class ClientController {
 
     @PutMapping
     @CachePut(
-            value = "clients",
-            key = "#client.idClient",
+            value = "clients", // Nombre de la caché donde se almacenará el cliente actualizado
+            key = "#client.idClient", // Clave en la caché basada en el ID del cliente actualizado
             unless = "#result == null" // No almacenar en caché si el resultado es 'null'.
     )
     public Client updateClient(@RequestBody Client client) {
@@ -94,6 +104,7 @@ public class ClientController {
     )
     public void deleteClient(@RequestParam long id) {
         long start = System.currentTimeMillis();
+        // Elimina un cliente de la base de datos utilizando su ID
         clientService.deleteClient(id);
         long end = System.currentTimeMillis();
         System.out.println("Tiempo de respuesta para eliminar cliente: " + (end - start) + " ms");
