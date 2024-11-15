@@ -1,5 +1,6 @@
 package com.uptc.frw.casoestudioredis.services;
 
+import com.uptc.frw.casoestudioredis.jpa.model.Client;
 import com.uptc.frw.casoestudioredis.jpa.model.Manufacturer;
 import com.uptc.frw.casoestudioredis.jpa.repository.ManufacturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import java.util.List;
 public class ManufacturerService {
     @Autowired
     private ManufacturerRepository manufacturerRepository;
+    public List<Manufacturer> saveAllManufacturers(List<Manufacturer> manufacturers) {
+        return manufacturerRepository.saveAll(manufacturers);
+    }
     public List<Manufacturer> findAllManufacturer(){
         return manufacturerRepository.findAll();
     }

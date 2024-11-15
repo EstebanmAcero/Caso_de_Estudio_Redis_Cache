@@ -48,6 +48,14 @@ public class ManufacturerController {
         System.out.println("Tiempo de respuesta para agregar fabricante: " + (end - start) + " ms");
         return saveManufacturer;
     }
+    @PostMapping("/generate")
+    public List<Manufacturer> addMultipleManufacturers(@RequestBody List<Manufacturer> manufacturers) {
+        long start = System.currentTimeMillis();
+        List<Manufacturer> savedManufacturers = manufacturerService.saveAllManufacturers(manufacturers);
+        long end = System.currentTimeMillis();
+        System.out.println("Tiempo de respuesta para agregar múltiples fabricantes: " + (end - start) + " ms");
+        return savedManufacturers;
+    }
     @PutMapping
     @CachePut(
             value = "manufacturer",
