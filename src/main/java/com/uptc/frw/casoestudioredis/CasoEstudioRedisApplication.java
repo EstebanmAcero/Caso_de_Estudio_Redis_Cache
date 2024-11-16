@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 public class CasoEstudioRedisApplication {
 
     public static void main(String[] args) {
+        // Llama al método run para iniciar la aplicación Spring Boot
         SpringApplication.run(CasoEstudioRedisApplication.class, args);
     }
 
